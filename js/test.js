@@ -1,7 +1,7 @@
 let hinhnen = new Hinhnen(900, 500);
 let bird = new Bird(hinhnen.width / 5, hinhnen.height / 2, 38, 26);
-let ongTren = new Ong(52, 200);
-let ongDuoi = new Ong(52, 200);
+let ongTren = new OngTren(52, 200);
+let ongDuoi = new OngDuoi(52, 200);
 let flyAudio = new Audio("../Sounds/fly.mp3");
 let scoreAudio = new Audio("../Sounds/score.mp3");
 let score = 0
@@ -18,8 +18,8 @@ function play() {
     bird.draw();
     for (let i = 0; i < ongArr.length; i++) {
         khoangCachDenOngDuoi = ongTren.height + khoangCachGiuaHaiOng;
-        ongTren.drawTren(ongArr[i].x, ongArr[i].y);
-        ongDuoi.drawDuoi(ongArr[i].x, ongArr[i].y + khoangCachDenOngDuoi);
+        ongTren.draw(ongArr[i].x, ongArr[i].y);
+        ongDuoi.draw(ongArr[i].x, ongArr[i].y + khoangCachDenOngDuoi);
         ongArr[i].x -= 5;
         if (ongArr[i].x == hinhnen.width / 2) {
             ongArr.push({
@@ -27,7 +27,6 @@ function play() {
                 y: Math.random() * ongTren.height - ongTren.height
             })
         }
-
         if (ongArr[i].x == bird.x) {
             scoreAudio.play();
             score++;
@@ -35,11 +34,10 @@ function play() {
         }
 
         if (bird.y >= hinhnen.height || bird.x + bird.width >= ongArr[i].x
-            && bird.x + bird.width <= ongArr[i].x + ongTren.width
-            && (bird.y <= ongArr[i].y + ongTren.height || bird.y + bird.height >= ongArr[i].y + khoangCachDenOngDuoi)) {
+            && bird.x +bird.width<= ongArr[i].x + ongTren.width
+            && (bird.y  <= ongArr[i].y + ongTren.height || bird.y + bird.height >= ongArr[i].y + khoangCachDenOngDuoi)) {
             return alert("Thua rồi, gà thế mà cũng đòi chơi :))")
         }
-
     }
 
     bird.moveDown();
@@ -49,9 +47,9 @@ function play() {
         setTimeout(play, 40)
     } else if (score < 10) {
         setTimeout(play, 30)
-    } else if (score < 15) {
+    } else if (score<15){
         setTimeout(play, 20)
-    } else {
+    }else {
         setTimeout(play, 10)
     }
 

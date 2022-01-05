@@ -1,21 +1,23 @@
 class Bird {
-    constructor(x,y,width,height) {
+    constructor(x, y) {
         this.x = x;
-        this.y =y;
-        this.width = width;
-        this.height = height;
-        this.canvas = document.getElementById('myCanvas');
-        this.ctx = this.canvas.getContext('2d');
+        this.y = y;
+        this.image = new Image();
+        this.image.src = 'images/bird.png'
+        this.width = 40;
+        this.height = 30;
     }
-    draw(){
-        let bird = new Image();
-        bird.src="../images/bird.png"
-        this.ctx.drawImage(bird,this.x,this.y);
+
+    draw(canvas) {
+        this.ctx = canvas.getContext('2d');
+        this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
-    moveDown(){
-        this.y +=5;
+
+    moveDown() {
+        this.y += 5;
     }
-    moveUp(){
-        this.y -=60;
+
+    moveUp() {
+        this.y -= 50;
     }
 }

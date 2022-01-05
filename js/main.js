@@ -11,15 +11,13 @@ tubeArr[0] = {
     x: canvas.width,
     y: 0
 }
-
-
-
+console.log(highScore)
 function drawTube() {
     for (let i = 0; i < tubeArr.length; i++) {
         let x = tubeArr[i].x;
         let y = tubeArr[i].y;
-        var upTube = new UpperTube(x, y);
-        var lowTube = new LowerTube(x, y + upTube.height + distance)
+        let upTube = new UpperTube(x, y);
+        let lowTube = new LowerTube(x, y + upTube.height + distance)
         upTube.draw(canvas);
         lowTube.draw(canvas);
         if (score < 5) {
@@ -34,6 +32,9 @@ function drawTube() {
             })
         }
         if (checkCollision(bird, upTube) || checkCollision(bird, lowTube) || bird.y + bird.height > canvas.height) {
+            if (score > highScore) {
+                saveHighScore('HighScore', score)
+            }
             confirm('Thua rồi, Ban có muốn chơi lại không', window.location.reload())
         }
         if (bird.x == tubeArr[i].x + upTube.width) {
@@ -57,12 +58,6 @@ function checkCollision(object1, object2) {
     return !(left1 > right2 || right1 < left2 || top1 > bottom2 || bottom1 < top2)
 }
 
-function saveHighScore() {
-    if (score > highScore) {
-        saveHighScore('HighScore', score)
-    }
-}
-
 function displayScore() {
     document.getElementById('score').innerText = score;
     document.getElementById('high-score').innerText = highScore;
@@ -75,7 +70,6 @@ function play() {
     displayScore();
     bird.moveDown();
     setTimeout(play, 50)
-    saveHighScore();
 }
 
 document.addEventListener('keyup', function (evt) {

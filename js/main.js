@@ -11,7 +11,7 @@ tubeArr[0] = {
     x: canvas.width,
     y: 0
 }
-console.log(highScore)
+
 function drawTube() {
     for (let i = 0; i < tubeArr.length; i++) {
         let x = tubeArr[i].x;
@@ -44,6 +44,46 @@ function drawTube() {
     }
 }
 
+function random(min, max) {
+    return Math.floor(Math.random() * (max - min) + min)
+}
+
+let apples = [];
+let spawnTimeApple = 20;
+let timer = 0;
+
+function drawApple() {
+    timer++;
+    if (timer > spawnTimeApple) {
+        let x = random(0, canvas.width);
+        let y = random(-5, -15);
+        let apple = new Apple(x, y);
+        apple.draw(canvas);
+        apples.push(apple);
+        timer = 0;
+    }
+}
+
+function drawAllApple() {
+    for (let i = 0; i < apples.length; i++) {
+        apples[i].draw(canvas);
+    }
+}
+
+function moveAllApple() {
+    for (let i = 0; i < apples.length; i++) {
+        apples[i].moveDown();
+    }
+}
+
+function checkCollisionApple() {
+    for (let i = 0; i < apples.length; i++) {
+        if (checkCollision(bird, apples[i])) {
+            confirm('Thua rồi, Ban có muốn chơi lại không', window.location.reload())
+        }
+    }
+}
+
 function checkCollision(object1, object2) {
     let left1 = object1.x;
     let right1 = object1.x + object1.width;
@@ -66,6 +106,10 @@ function displayScore() {
 function play() {
     background.draw(canvas);
     bird.draw(canvas);
+    drawApple();
+    drawAllApple();
+    moveAllApple();
+    checkCollisionApple();
     drawTube();
     displayScore();
     bird.moveDown();

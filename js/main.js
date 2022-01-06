@@ -6,6 +6,9 @@ let scoreAudio = new Audio("../Sounds/score.mp3");
 let score = 0
 let highScore = loadHighScore('HighScore')
 const distance = 120;
+let apples = [];
+let spawnTimeApple = 30;
+let timer = 0;
 let tubeArr = []
 tubeArr[0] = {
     x: canvas.width,
@@ -47,10 +50,6 @@ function drawTube() {
 function random(min, max) {
     return Math.floor(Math.random() * (max - min) + min)
 }
-
-let apples = [];
-let spawnTimeApple = 20;
-let timer = 0;
 
 function drawApple() {
     timer++;
